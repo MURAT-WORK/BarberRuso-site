@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BARBERRUSO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Tenor+Sans&family=Plus+Jakarta+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07100B;
+    --surface: #0c1611;
+    --gold: #D4AF37;
+    --gold-muted: rgba(212,175,55,0.18);
+    --ivory: #ece6de;
+    --ivory-muted: rgba(236,230,222,0.5);
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Tenor Sans', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ivory);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+  /* ── HEADER ── */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    background: rgba(7,16,11,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+  }
+
+  .logo {
+    font-family: var(--font-serif);
+    font-size: clamp(18px, 2.2vw, 26px);
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .btn-outline {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: transparent;
+    border: 1px solid var(--gold);
+    padding: 11px 28px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-outline:hover { background: var(--gold); color: var(--bg); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(212,175,55,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(34px, 6vw, 82px);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.05;
+    color: var(--ivory);
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .hero-line {
+    display: block;
+    opacity: 0;
+    transform: translateX(-80px);
+    animation: slideLeft 1.4s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .hero-line.right {
+    transform: translateX(80px);
+    animation-name: slideRight;
+    animation-delay: 0.3s;
+  }
+  .hero-line .gold { color: var(--gold); }
+
+  @keyframes slideLeft {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideRight {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .hero-sub {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 1.5vw, 16px);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--ivory-muted);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.7s;
+  }
+
+  .hero-btn {
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1s;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-line-divider {
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 0 auto 60px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.3s;
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 100px 48px; }
+
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 5vw, 60px);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    margin-bottom: 64px;
+    text-align: center;
+  }
+
+  .gold-rule {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    margin: 20px auto 64px;
+  }
+
+  /* ── MASTERS ── */
+  #masters { padding: 100px 32px; }
+
+  .master-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(16px, 4vw, 64px);
+    align-items: center;
+    max-width: 960px;
+    margin: 0 auto 80px;
+  }
+
+  .master-block:last-child { margin-bottom: 0; }
+
+  .master-photo-wrap {
+    position: relative;
+    display: flex; justify-content: center; align-items: flex-end;
+  }
+
+  .master-photo-wrap::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 80%; height: 70%;
+    background: radial-gradient(ellipse at bottom, rgba(212,175,55,0.13) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .master-photo {
+    width: 100%;
+    max-width: 260px;
+    aspect-ratio: 9/16;
+    object-fit: cover;
+    object-position: top;
+    position: relative; z-index: 1;
+    display: block;
+  }
+
+  .master-text { display: flex; flex-direction: column; justify-content: center; }
+  .master-name {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    margin-bottom: 8px;
+  }
+  .master-role {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .master-desc {
+    font-size: clamp(11px, 1.3vw, 14px);
+    line-height: 1.8;
+    color: var(--ivory-muted);
+  }
+
+  /* ── SERVICES SLIDER ── */
+  #services { background: var(--surface); }
+
+  .slider-wrap { position: relative; overflow: hidden; }
+
+  .slider-track {
+    display: flex;
+    transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .service-card {
+    min-width: 100%;
+    padding: clamp(28px, 4vw, 56px) clamp(20px, 6vw, 100px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  /* Угловые уголки — luxury corner frame */
+  .service-card::before,
+  .service-card::after {
+    content: '';
+    position: absolute;
+    width: clamp(18px, 3vw, 28px);
+    height: clamp(18px, 3vw, 28px);
+    border-color: rgba(212,175,55,0.55);
+    border-style: solid;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .service-card::before {
+    top: 0; left: clamp(20px, 6vw, 100px);
+    border-width: 1px 0 0 1px;
+  }
+  .service-card::after {
+    top: 0; right: clamp(20px, 6vw, 100px);
+    border-width: 1px 1px 0 0;
+  }
+
+  /* Нижние уголки через .service-card-corners */
+  .service-card-corners {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .service-card-corners::before,
+  .service-card-corners::after {
+    content: '';
+    position: absolute;
+    width: clamp(18px, 3vw, 28px);
+    height: clamp(18px, 3vw, 28px);
+    border-color: rgba(212,175,55,0.55);
+    border-style: solid;
+  }
+  .service-card-corners::before {
+    bottom: 0; left: clamp(20px, 6vw, 100px);
+    border-width: 0 0 1px 1px;
+  }
+  .service-card-corners::after {
+    bottom: 0; right: clamp(20px, 6vw, 100px);
+    border-width: 0 1px 1px 0;
+  }
+
+  .service-banner {
+    width: 100%;
+    aspect-ratio: 21/9;
+    margin-bottom: 36px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(212,175,55,0.18);
+  }
+
+  .service-banner-inner {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Unique abstract banners per service */
+  .sb-1 { background: linear-gradient(110deg, #07100B 0%, #111f14 40%, #1a2a1a 100%); }
+  .sb-1::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(212,175,55,0.04) 12px, rgba(212,175,55,0.04) 13px);
+  }
+  .sb-2 { background: linear-gradient(135deg, #0a1710 0%, #0f1e14 50%, #07100B 100%); }
+  .sb-2::after {
+    content: '';
+    position: absolute; top: 50%; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.35), transparent);
+    transform: translateY(-50%);
+  }
+  .sb-3 { background: radial-gradient(ellipse at 30% 50%, #111f14 0%, #07100B 70%); }
+  .sb-4 { background: linear-gradient(160deg, #07100B 0%, #0d1a10 60%, #111f14 100%); }
+  .sb-4::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(212,175,55,0.08) 0%, transparent 60%);
+  }
+  .sb-5 { background: linear-gradient(90deg, #07100B 0%, #0e1c12 50%, #07100B 100%); }
+
+  .sb-ornament {
+    width: 40px; height: 1px;
+    background: var(--gold);
+    position: relative;
+    z-index: 1;
+  }
+  .sb-ornament::before, .sb-ornament::after {
+    content: '';
+    position: absolute; top: 50%;
+    width: 4px; height: 4px;
+    border: 1px solid var(--gold);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .sb-ornament::before { left: -8px; }
+  .sb-ornament::after { right: -8px; }
+
+  .service-name {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 5vw, 56px);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    margin-bottom: 12px;
+  }
+
+  .service-price {
+    font-family: var(--font-sans);
+    font-size: clamp(14px, 2vw, 18px);
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+
+  /* Pagination timer */
+  .slider-pagination {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    margin-top: 32px;
+  }
+
+  .pagination-dots {
+    display: flex; gap: 8px;
+  }
+
+  .pg-dot {
+    width: 24px; height: 1px;
+    background: rgba(212,175,55,0.25);
+    position: relative; overflow: hidden; cursor: pointer;
+    transition: background 0.3s;
+  }
+  .pg-dot.active { background: rgba(212,175,55,0.25); }
+  .pg-dot .fill {
+    position: absolute; top: 0; left: 0; height: 100%;
+    width: 0%; background: var(--gold);
+  }
+  .pg-dot.active .fill { animation: fillDot 7s linear forwards; }
+  @keyframes fillDot { to { width: 100%; } }
+
+  .pg-count {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ivory-muted);
+  }
+
+  /* ── GALLERY ── */
+  #gallery { padding: 100px 48px; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .gallery-item {
+    aspect-ratio: 1/1;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .gallery-item-inner {
+    position: absolute; inset: 0;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .gallery-item:hover .gallery-item-inner { transform: scale(1.04); }
+  .gallery-item::after {
+    content: '';
+    position: absolute; inset: 0;
+    border: 1px solid transparent;
+    transition: border-color 0.4s;
+    z-index: 2;
+  }
+  .gallery-item:hover::after { border-color: var(--gold); }
+
+  /* Gallery placeholders - varied dark luxury aesthetics */
+  .gi-1 { background: linear-gradient(135deg, #0d1a10 0%, #131e14 100%); }
+  .gi-2 { background: linear-gradient(45deg, #111b12 0%, #0a1509 100%); }
+  .gi-3 { background: linear-gradient(180deg, #0c1a0e 0%, #09130b 100%); }
+  .gi-4 { background: radial-gradient(circle at 30% 30%, #131e14 0%, #07100B 70%); }
+  .gi-5 { background: linear-gradient(225deg, #111e13 0%, #0b1710 100%); }
+  .gi-6 { background: radial-gradient(circle at 70% 70%, #0f1c11 0%, #07100B 65%); }
+  .gi-7 { background: linear-gradient(315deg, #0d1a10 0%, #0a1509 100%); }
+  .gi-8 { background: radial-gradient(ellipse at 50% 0%, #131e14 0%, #07100B 70%); }
+  .gi-9 { background: linear-gradient(90deg, #0c1a0e 0%, #111b12 100%); }
+  .gi-10 { background: radial-gradient(circle at 50% 100%, #131e14 0%, #07100B 70%); }
+  .gi-11 { background: linear-gradient(30deg, #09130b 0%, #111e13 100%); }
+  .gi-12 { background: radial-gradient(ellipse at 50% 50%, #0f1c11 0%, #07100B 65%); }
+
+  .gallery-item-inner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(212,175,55,0.015) 20px, rgba(212,175,55,0.015) 21px);
+  }
+
+  .gallery-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 24px 20px 16px;
+    background: linear-gradient(to top, rgba(7,16,11,0.85), transparent);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .gallery-item:hover .gallery-label { opacity: 1; }
+
+  /* ── REVIEWS ── */
+  #reviews { padding: 100px 0; overflow: hidden; }
+  #reviews > .section-label,
+  #reviews > .section-title,
+  #reviews > .gold-rule { padding: 0 48px; }
+
+  .marquee-wrap {
+    position: relative;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    animation: marquee 35s linear infinite;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .review-card {
+    background: var(--surface);
+    border: 1px solid rgba(212,175,55,0.12);
+    padding: 28px 28px 24px;
+    width: 300px;
+    flex-shrink: 0;
+  }
+
+  .stars {
+    display: flex; gap: 4px; margin-bottom: 14px;
+    color: var(--gold);
+    font-size: 13px;
+  }
+
+  .review-text {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--ivory-muted);
+    margin-bottom: 18px;
+  }
+
+  .review-author {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ivory);
+  }
+
+  .reviews-cta {
+    text-align: center;
+    margin-top: 56px;
+    padding: 0 48px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(212,175,55,0.15);
+    padding: 64px 48px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+
+  .footer-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .footer-item {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--ivory-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-item a {
+    color: var(--ivory-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-item a:hover { color: var(--gold); }
+
+  .footer-social {
+    display: flex; gap: 24px; justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .footer-social a {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ivory-muted);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212,175,55,0.25);
+    padding-bottom: 2px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .footer-social a:hover { color: var(--gold); border-color: var(--gold); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(236,230,222,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(7,16,11,0.75);
+    backdrop-filter: blur(16px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal-box {
+    background: #0e1a12;
+    border: 1px solid rgba(212,175,55,0.25);
+    padding: clamp(32px, 5vw, 56px);
+    width: 100%; max-width: 480px;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.35s;
+  }
+  .modal-overlay.open .modal-box { transform: translateY(0); }
+
+  .modal-title {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    margin-bottom: 6px;
+  }
+  .modal-sub {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .modal-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none;
+    color: var(--ivory-muted);
+    font-size: 20px; cursor: pointer;
+    font-family: var(--font-sans);
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--gold); }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ivory-muted);
+    margin-bottom: 8px;
+  }
+
+  .form-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    padding: 10px 0;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ivory);
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-input:focus { border-color: var(--gold); }
+  .form-input::placeholder { color: rgba(236,230,222,0.2); }
+
+  .form-textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(212,175,55,0.2);
+    padding: 12px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--ivory);
+    outline: none;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.3s;
+    margin-top: 8px;
+  }
+  .form-textarea:focus { border-color: var(--gold); }
+  .form-textarea::placeholder { color: rgba(236,230,222,0.2); }
+
+  .selected-service-display {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .star-selector {
+    display: flex; gap: 10px; margin-top: 8px;
+  }
+  .star-btn {
+    background: none; border: none;
+    color: rgba(212,175,55,0.3);
+    font-size: 22px; cursor: pointer;
+    transition: color 0.2s;
+    padding: 0;
+  }
+  .star-btn.selected { color: var(--gold); }
+
+  .btn-submit {
+    width: 100%;
+    margin-top: 28px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 14px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-submit:hover { background: var(--gold); color: var(--bg); }
+
+  .success-state {
+    text-align: center;
+    padding: 20px 0;
+    display: none;
+  }
+  .success-icon {
+    font-size: 32px;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .success-text {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--ivory);
+    line-height: 1.6;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    header { padding: 18px 20px; }
+    section { padding: 72px 20px; }
+    #masters { padding: 72px 20px; }
+    #reviews > .section-label,
+    #reviews > .section-title,
+    #reviews > .gold-rule { padding: 0 20px; }
+    .reviews-cta { padding: 0 20px; }
+    footer { padding: 48px 20px; }
+    .gallery-grid { gap: 6px; }
+
+    .master-block {
+      gap: 12px;
+    }
+    .master-name { font-size: clamp(18px, 5vw, 28px); }
+    .master-photo { max-width: 160px; }
+
+    .service-card { padding: 20px; }
+    .service-card::before { left: 20px; }
+    .service-card::after { right: 20px; }
+    .service-card-corners::before { left: 20px; }
+    .service-card-corners::after { right: 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .master-block {
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .master-name { font-size: clamp(16px, 5.5vw, 24px); }
+    .master-role { font-size: 9px; letter-spacing: 0.18em; }
+    .master-desc { font-size: 10px; }
+    .master-photo { max-width: 130px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo">BARBERRUSO</a>
+  <button class="btn-outline" onclick="openBooking()">ЗАПИСАТЬСЯ</button>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-title">
+    <span class="hero-line">ИСКУССТВО ТВОЕГО</span>
+    <span class="hero-line right"><span class="gold">СТИЛЯ</span></span>
+  </div>
+  <p class="hero-sub">Где форма обретает смысл, а каждая линия доведена до совершенства.<br>Исключительный сервис для тех, кто ценит безупречность.</p>
+  <div class="hero-btn">
+    <button class="btn-outline" onclick="openBooking()">ЗАПИСАТЬСЯ</button>
+  </div>
+</section>
+
+<!-- MASTERS -->
+<section id="masters">
+  <div style="text-align:center; margin-bottom: 80px;">
+    <p class="section-label">Команда</p>
+    <h2 class="section-title" style="margin-bottom:0;">МАСТЕРА</h2>
+    <div class="gold-rule" style="margin: 20px auto 0;"></div>
+  </div>
+
+  <!-- РУСЛАН: Text Left, Photo Right -->
+  <div class="master-block">
+    <div class="master-text">
+      <div class="master-name">РУСЛАН</div>
+      <div class="master-role">Старший мастер</div>
+      <p class="master-desc">Более 8 лет в индустрии. Специализация — классические и современные мужские стрижки, работа с бородой любой сложности. Каждый клиент — отдельная история стиля.</p>
+    </div>
+    <div class="master-photo-wrap">
+      <img src="img/1master.png" alt="Руслан" class="master-photo" onerror="this.style.background='linear-gradient(180deg,#131e14 0%,#07100B 100%)';this.style.opacity='0.7'">
+    </div>
+  </div>
+
+  <!-- ВЛАД: Photo Left, Text Right -->
+  <div class="master-block">
+    <div class="master-photo-wrap">
+      <img src="img/2master.png" alt="Влад" class="master-photo" onerror="this.style.background='linear-gradient(180deg,#0e1a11 0%,#07100B 100%)';this.style.opacity='0.7'">
+    </div>
+    <div class="master-text">
+      <div class="master-name">ВЛАД</div>
+      <div class="master-role">Мастер по стилю</div>
+      <p class="master-desc">Профессионал фейдов и текстурных стрижек. Точная работа с каждым волоском. Влад создаёт образы, которые говорят сами за себя — без лишних слов.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label">Цены</p>
+  <h2 class="section-title">ПРЕЙСКУРАНТ</h2>
+
+  <div class="slider-wrap">
+    <div class="slider-track" id="sliderTrack">
+
+      <!-- Услуга 1 -->
+      <div class="service-card">
+        <div class="service-card-corners"></div>
+        <div class="service-banner">
+          <img src="img/haircut.png" alt="Мужская стрижка" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="service-name">Мужская стрижка</div>
+        <div class="service-price">1 300 ₽</div>
+        <button class="btn-outline" onclick="openBooking('Мужская стрижка — 1 300 ₽')">ЗАПИСАТЬСЯ</button>
+      </div>
+
+      <!-- Услуга 2 -->
+      <div class="service-card">
+        <div class="service-card-corners"></div>
+        <div class="service-banner">
+          <img src="img/combo.png" alt="Стрижка + борода" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="service-name">Стрижка + борода</div>
+        <div class="service-price">2 000 ₽</div>
+        <button class="btn-outline" onclick="openBooking('Стрижка + борода — 2 000 ₽')">ЗАПИСАТЬСЯ</button>
+      </div>
+
+      <!-- Услуга 3 -->
+      <div class="service-card">
+        <div class="service-card-corners"></div>
+        <div class="service-banner">
+          <img src="img/beard.png" alt="Борода" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="service-name">Борода</div>
+        <div class="service-price">1 000 ₽</div>
+        <button class="btn-outline" onclick="openBooking('Борода — 1 000 ₽')">ЗАПИСАТЬСЯ</button>
+      </div>
+
+      <!-- Услуга 4 -->
+      <div class="service-card">
+        <div class="service-card-corners"></div>
+        <div class="service-banner">
+          <img src="img/fade.png" alt="Fade / Машинка" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="service-name">Fade / Машинка</div>
+        <div class="service-price">1 000 ₽</div>
+        <button class="btn-outline" onclick="openBooking('Fade/Машинка — 1 000 ₽')">ЗАПИСАТЬСЯ</button>
+      </div>
+
+      <!-- Услуга 5 -->
+      <div class="service-card">
+        <div class="service-card-corners"></div>
+        <div class="service-banner">
+          <img src="img/kids.png" alt="Детская стрижка" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="service-name">Детская стрижка</div>
+        <div class="service-price">1 000 ₽</div>
+        <button class="btn-outline" onclick="openBooking('Детская стрижка — 1 000 ₽')">ЗАПИСАТЬСЯ</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="slider-pagination">
+    <div class="pagination-dots" id="pgDots"></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <p class="section-label">Работы</p>
+  <h2 class="section-title">ГАЛЕРЕЯ</h2>
+
+<div class="gallery-grid">
+    
+    <!-- 1. Стиль -->
+    <div class="gallery-item">
+      <img src="img/g1.png" style="width:100%; height:100%; object-fit:cover;" alt="Стиль">
+      <div class="gallery-label">Стиль</div>
+    </div>
+
+    <!-- 2. Точность -->
+    <div class="gallery-item">
+      <img src="img/g2.png" style="width:100%; height:100%; object-fit:cover;" alt="Точность">
+      <div class="gallery-label">Точность</div>
+    </div>
+
+    <!-- 3. Fade -->
+    <div class="gallery-item">
+      <img src="img/g3.png" style="width:100%; height:100%; object-fit:cover;" alt="Fade">
+      <div class="gallery-label">Fade</div>
+    </div>
+
+    <!-- 4. Борода -->
+    <div class="gallery-item">
+      <img src="img/g4.png" style="width:100%; height:100%; object-fit:cover;" alt="Борода">
+      <div class="gallery-label">Борода</div>
+    </div>
+
+    <!-- 5. Классика -->
+    <div class="gallery-item">
+      <img src="img/g5.png" style="width:100%; height:100%; object-fit:cover;" alt="Классика">
+      <div class="gallery-label">Классика</div>
+    </div>
+
+    <!-- 6. Детали -->
+    <div class="gallery-item">
+      <img src="img/g6.png" style="width:100%; height:100%; object-fit:cover;" alt="Детали">
+      <div class="gallery-label">Детали</div>
+    </div>
+
+</div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <p class="section-label">Клиенты</p>
+  <h2 class="section-title">ОТЗЫВЫ</h2>
+  <div class="gold-rule"></div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marqueeTrack">
+      <!-- Cards duplicated for infinite loop -->
+    </div>
+  </div>
+
+  <div class="reviews-cta">
+    <button class="btn-outline" onclick="openReview()">ОСТАВИТЬ ОТЗЫВ</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">BARBERRUSO</div>
+  <div class="gold-rule" style="margin: 0 auto 32px;"></div>
+  <div class="footer-details">
+    <div class="footer-item">г. Сатка, ул. Солнечная 11</div>
+    <div class="footer-item"><a href="tel:+79822826697">+7 982 282 6697</a></div>
+  </div>
+  <div class="footer-social">
+    <a href="https://t.me/BarberRuso" target="_blank">Telegram</a>
+    <a href="https://www.instagram.com/barber_ruso/" target="_blank">Instagram</a>
+  </div>
+  <div class="footer-copy">© 2025 BARBERRUSO. Все права защищены.</div>
+</footer>
+
+<!-- MODAL: BOOKING -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('bookingModal')">✕</button>
+    <div class="modal-title">Запись</div>
+    <div class="modal-sub" id="bookingSubtitle">Онлайн-запись</div>
+
+    <div id="bookingForm">
+      <div id="selectedServiceDisplay" class="selected-service-display" style="display:none;"></div>
+      <div class="form-group">
+        <label class="form-label">Ваше имя</label>
+        <input type="text" class="form-input" id="bookingName" placeholder="Иван Иванов">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Телефон</label>
+        <input type="tel" class="form-input" id="bookingPhone" placeholder="+7 (___) ___-__-__">
+      </div>
+      <button class="btn-submit" onclick="submitBooking()">ОТПРАВИТЬ ЗАЯВКУ</button>
+    </div>
+
+    <div class="success-state" id="bookingSuccess">
+      <div class="success-icon">✦</div>
+      <div class="success-text">Заявка принята.<br>Руслан свяжется с вами.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: REVIEW -->
+<div class="modal-overlay" id="reviewModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('reviewModal')">✕</button>
+    <div class="modal-title">Отзыв</div>
+    <div class="modal-sub">Поделитесь впечатлениями</div>
+
+    <div id="reviewForm">
+      <div class="form-group">
+        <label class="form-label">Ваше имя</label>
+        <input type="text" class="form-input" id="reviewName" placeholder="Иван Иванов">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Оценка</label>
+        <div class="star-selector" id="starSelector">
+          <button class="star-btn" data-val="1" onclick="setStars(1)">★</button>
+          <button class="star-btn" data-val="2" onclick="setStars(2)">★</button>
+          <button class="star-btn" data-val="3" onclick="setStars(3)">★</button>
+          <button class="star-btn" data-val="4" onclick="setStars(4)">★</button>
+          <button class="star-btn" data-val="5" onclick="setStars(5)">★</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ваш отзыв</label>
+        <textarea class="form-textarea" id="reviewText" placeholder="Расскажите о вашем опыте..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitReview()">ОТПРАВИТЬ ОТЗЫВ</button>
+    </div>
+
+    <div class="success-state" id="reviewSuccess">
+      <div class="success-icon">✦</div>
+      <div class="success-text">Спасибо за ваш отзыв!<br>Он появится после модерации.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── SLIDER ──
+  const services = ['Мужская стрижка', 'Стрижка + борода', 'Борода', 'Fade/Машинка', 'Детская стрижка'];
+  let currentSlide = 0;
+  let sliderTimer = null;
+  let dotFillTimer = null;
+  const track = document.getElementById('sliderTrack');
+  const pgDots = document.getElementById('pgDots');
+
+  // Build dots
+  services.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'pg-dot' + (i === 0 ? ' active' : '');
+    d.innerHTML = '<div class="fill"></div>';
+    d.addEventListener('click', () => goToSlide(i));
+    pgDots.appendChild(d);
+  });
+
+  function goToSlide(idx) {
+    currentSlide = idx;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    // Reset dots
+    document.querySelectorAll('.pg-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+      d.querySelector('.fill').style.animation = 'none';
+      void d.querySelector('.fill').offsetWidth; // reflow
+      if (i === idx) d.querySelector('.fill').style.animation = 'fillDot 7s linear forwards';
+    });
+    clearInterval(sliderTimer);
+    sliderTimer = setInterval(nextSlide, 7000);
+  }
+
+  function nextSlide() {
+    goToSlide((currentSlide + 1) % services.length);
+  }
+
+  goToSlide(0);
+
+  // ── REVIEWS MARQUEE ──
+  const reviews = [
+    { name: 'Артём К.', text: 'Пришёл первый раз и сразу понял — это моё место. Руслан сделал именно то, что я хотел. Чисто, быстро, стильно.' },
+    { name: 'Дмитрий П.', text: 'Атмосфера на высшем уровне. Влад — профи своего дела. Фейд получился просто идеальным. Рекомендую всем.' },
+    { name: 'Михаил В.', text: 'Наконец нашёл хорошего мастера! Борода теперь выглядит как надо. Буду приходить только сюда.' },
+    { name: 'Сергей Л.', text: 'Запись удобная, мастер вышел точно по времени. Результат — огонь. Спасибо за работу!' },
+    { name: 'Никита Р.', text: 'Стрижка держится отлично уже несколько недель. Видно, что ребята любят своё дело. Пять звёзд без сомнений.' },
+    { name: 'Алексей Ш.', text: 'Привёл сына на детскую стрижку. Влад нашёл подход моментально. Ребёнок доволен, я доволен. Отличное место.' },
+    { name: 'Иван О.', text: 'Стильно, уютно, профессионально. Руслан объяснил что и как, предложил несколько вариантов. Очень доволен.' },
+  ];
+
+  const marquee = document.getElementById('marqueeTrack');
+  const allReviews = [...reviews, ...reviews]; // double for infinite
+  allReviews.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML = `
+      <div class="stars">★★★★★</div>
+      <div class="review-text">${r.text}</div>
+      <div class="review-author">${r.name}</div>
+    `;
+    marquee.appendChild(card);
+  });
+
+  // ── MODALS ──
+  let selectedStars = 5;
+
+  function openBooking(service) {
+    const modal = document.getElementById('bookingModal');
+    const display = document.getElementById('selectedServiceDisplay');
+    const subtitle = document.getElementById('bookingSubtitle');
+    document.getElementById('bookingForm').style.display = 'block';
+    document.getElementById('bookingSuccess').style.display = 'none';
+    document.getElementById('bookingName').value = '';
+    document.getElementById('bookingPhone').value = '';
+    if (service) {
+      display.textContent = service;
+      display.style.display = 'block';
+      subtitle.textContent = 'Онлайн-запись';
+    } else {
+      display.style.display = 'none';
+      subtitle.textContent = 'Онлайн-запись';
+    }
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function openReview() {
+    const modal = document.getElementById('reviewModal');
+    document.getElementById('reviewForm').style.display = 'block';
+    document.getElementById('reviewSuccess').style.display = 'none';
+    document.getElementById('reviewName').value = '';
+    document.getElementById('reviewText').value = '';
+    setStars(5);
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', e => {
+      if (e.target === m) closeModal(m.id);
+    });
+  });
+
+  function submitBooking() {
+    const name = document.getElementById('bookingName').value.trim();
+    const phone = document.getElementById('bookingPhone').value.trim();
+    if (!name || !phone) { alert('Пожалуйста, заполните все поля.'); return; }
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('bookingSuccess').style.display = 'block';
+    setTimeout(() => closeModal('bookingModal'), 3000);
+  }
+
+  function setStars(n) {
+    selectedStars = n;
+    document.querySelectorAll('.star-btn').forEach(b => {
+      b.classList.toggle('selected', parseInt(b.dataset.val) <= n);
+    });
+  }
+
+  function submitReview() {
+    const name = document.getElementById('reviewName').value.trim();
+    const text = document.getElementById('reviewText').value.trim();
+    if (!name || !text) { alert('Пожалуйста, заполните все поля.'); return; }
+    // Prevent default — ready for future DB hook
+    document.getElementById('reviewForm').style.display = 'none';
+    document.getElementById('reviewSuccess').style.display = 'block';
+    setTimeout(() => closeModal('reviewModal'), 3000);
+  }
+
+  // Phone mask
+  document.getElementById('bookingPhone').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '');
+    if (v.startsWith('8')) v = '7' + v.slice(1);
+    if (!v.startsWith('7')) v = '7' + v;
+    v = v.slice(0,11);
+    let out = '+7';
+    if (v.length > 1) out += ' (' + v.slice(1,4);
+    if (v.length >= 4) out += ') ' + v.slice(4,7);
+    if (v.length >= 7) out += '-' + v.slice(7,9);
+    if (v.length >= 9) out += '-' + v.slice(9,11);
+    this.value = out;
+  });
+
+  // Escape key closes modals
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+</script>
+</body>
+</html>
