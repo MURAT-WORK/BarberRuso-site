@@ -392,15 +392,17 @@
   }
 
   .pg-dot {
-    width: 24px; height: 1px;
-    background: rgba(212,175,55,0.25);
+    width: 32px; height: 3px;
+    background: rgba(212,175,55,0.2);
+    border-radius: 2px;
     position: relative; overflow: hidden; cursor: pointer;
     transition: background 0.3s;
   }
-  .pg-dot.active { background: rgba(212,175,55,0.25); }
+  .pg-dot.active { background: rgba(212,175,55,0.2); }
   .pg-dot .fill {
     position: absolute; top: 0; left: 0; height: 100%;
     width: 0%; background: var(--gold);
+    border-radius: 2px;
   }
   .pg-dot.active .fill { animation: fillDot 7s linear forwards; }
   @keyframes fillDot { to { width: 100%; } }
@@ -1098,7 +1100,27 @@
 
   goToSlide(0);
 
-  // ── REVIEWS MARQUEE ──
+  // ── SWIPE (touch) ──
+  let touchStartX = 0;
+  let touchStartY = 0;
+  const sliderWrap = document.querySelector('.slider-wrap');
+
+  sliderWrap.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  sliderWrap.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    // Игнорируем вертикальный скролл
+    if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 40) return;
+    if (dx < 0) {
+      goToSlide((currentSlide + 1) % services.length);
+    } else {
+      goToSlide((currentSlide - 1 + services.length) % services.length);
+    }
+  }, { passive: true });
   const reviews = [
     { name: 'Артём К.', text: 'Пришёл первый раз и сразу понял — это моё место. Руслан сделал именно то, что я хотел. Чисто, быстро, стильно.' },
     { name: 'Дмитрий П.', text: 'Атмосфера на высшем уровне. Влад — профи своего дела. Фейд получился просто идеальным. Рекомендую всем.' },
